@@ -1,0 +1,229 @@
+================================================================================
+SIGCOMM 近三年 (2023-2025) AI/ML/DL 相关论文爬取与分析总结
+爬取日期: 2026-07-16
+数据来源: https://sigcomm.org/ 及 https://conferences.sigcomm.org/
+================================================================================
+
+一、SIGCOMM 2024 (悉尼) —— AI/ML 成为绝对核心主题
+================================================================================
+
+SIGCOMM 2024 将 "AI" 提升到了前所未有的高度，专门设置了两场 "Moving bits for AI" 
+技术session，还有"Can ML models replace network algorithms?" 非论文讨论专场，
+以及华为和阿里云的 AI 网络产业活动。这标志着网络研究正式进入 "AI-first" 时代。
+
+【Main Conference Papers - AI/ML 直接相关】
+
+1. ★ Crux: GPU-Efficient Communication Scheduling for Deep Learning Training
+   [Honorable Mention]
+   作者: Alibaba Cloud
+   内容: 针对多租户云中 DLT(分布式深度学习训练)任务的 GPU 通信调度器，
+   通过 GPU 强度感知的通信调度减少通信争用，提高 GPU 计算利用率 8.3%-23%
+   关键词: 深度学习, GPU, 通信调度, LLM训练
+
+2. Rethinking Machine Learning Collective Communication as a 
+   Multi-Commodity Flow Problem (TE-CCL)
+   作者: UPenn, Microsoft Research, OpenAI
+   内容: 采用流量工程方法优化 ML 集体通信，性能比 TACCL 提升 2.14x
+   关键词: 机器学习, 集体通信, 流量工程, 分布式训练
+
+3. CacheGen: KV Cache Compression and Streaming for Fast Large 
+   Language Model Serving
+   作者: UChicago, Stanford, Microsoft, Meta
+   内容: 针对 LLM 推理中 KV Cache 的网络传输瓶颈，提出压缩和流式加载方案，
+   KV Cache 体积减少 3.5-4.3x，延迟减少 3.2-3.7x
+   关键词: Transformer, LLM推理, KV Cache, 模型serving
+
+4. RDMA over Ethernet for Distributed Training at Meta Scale
+   [Experience Track]
+   作者: Meta
+   内容: Meta 大规模分布式 AI 训练的 RoCE 网络设计与运维经验
+   关键词: 分布式训练, RDMA, RoCE, GPU集群网络
+
+【Workshop & Non-paper Sessions】
+- "Can ML models replace network algorithms?" 专题讨论
+- NAIC (Network Architecture for Intelligent Computing) Workshop
+- 华为: "Challenges and opportunities to high-performance networks in AI era"
+- 阿里云: "Predictable Network Practice in Alibaba Cloud"
+- Tutorial: "ML for Networks" (Closed-Loop ML Pipelines)
+
+
+二、SIGCOMM 2023 (纽约) —— ML在网络中的深入应用
+================================================================================
+
+【AI/ML/DL 相关论文】
+
+1. AdaInf: Data Drift Adaptive Scheduling for Accurate and SLO-guaranteed 
+   Multiple-Model Inference Serving at Edge Servers
+   作者: University of Virginia
+   内容: 在边缘服务器上实现多模型推理的自适应调度
+   关键词: 深度学习推理, 边缘计算, 模型serving
+
+2. Computers Can Learn from the Heuristic Designs and Master 
+   Internet Congestion Control
+   作者: NYU, University of Toronto
+   内容: 利用 ML 从启发式设计中学习，掌握互联网拥塞控制
+   关键词: 机器学习, 拥塞控制, 启发式学习
+
+3. Darwin: Flexible Learning-based CDN Caching
+   作者: UT Austin, UC Berkeley, Akamai
+   内容: 基于学习的灵活 CDN 缓存策略
+   关键词: 机器学习, CDN, 缓存优化
+
+4. ★ Lightning: A Reconfigurable Photonic-Electronic SmartNIC for 
+   Fast and Energy-Efficient Inference
+   作者: MIT
+   内容: 可重构光电 SmartNIC，用于快速高能效推理
+   关键词: 深度学习推理, SmartNIC, 光电混合
+
+5. PacketGame: Multi-Stream Packet Gating for Concurrent Video 
+   Inference at Scale
+   作者: USTC
+   内容: 大规模并发视频推理的多流包门控机制
+   关键词: 视频推理, CNN, 流调度
+
+6. Janus: A Unified Distributed Training Framework for Sparse 
+   Mixture-of-Experts Models
+   作者: Tsinghua University, ByteDance
+   内容: 稀疏 MoE 模型的统一分布式训练框架
+   关键词: MoE, 分布式训练, Transformer
+
+7. ★ Lightwave Fabrics: At-Scale Optical Circuit Switching for 
+   Datacenter and Machine Learning Systems
+   [Experience Track]
+   作者: Google
+   内容: 用于数据中心和 ML 系统的大规模光路交换架构
+   关键词: 光交换, ML训练基础设施, 数据中心网络
+
+8. BitSense: Universal and Nearly Zero-Error Optimization for 
+   Sketch Counters with Compressive Sensing
+   作者: Peking University
+   内容: 基于压缩感知的 Sketch 计数器优化
+   关键词: 压缩感知, 网络测量
+
+【Tutorials/Workshops】
+- Tutorial: "Closed-Loop ML for Networks Pipelines" (Trustee/netUnicorn)
+- Poster: IGNITION - Fast Prototyping of Graph Neural Networks for 
+  Communication Networks
+
+
+三、SIGCOMM 2025 —— LLM 网络基础设施爆发
+================================================================================
+
+SIGCOMM 2025 投稿 461 篇，录用 74 篇（录取率 16.1%），AI/LLM 相关论文比例极高。
+
+【Main Conference Papers - AI/ML 直接相关】
+
+1. ★ Pegasus: A Universal Framework for Scalable Deep Learning 
+   Inference on the Dataplane
+   作者: Tsinghua University
+   内容: 在可编程数据平面上实现通用 DL 推理框架，支持 MLP/RNN/CNN/AutoEncoder，
+   相比现有方法平均准确率提升 22.8%，模型规模大 248x
+   关键词: 深度学习推理, P4, 智能数据平面, RNN, CNN
+
+2. InfiniteHBD: Building Datacenter-Scale High-Bandwidth Domain 
+   for LLM with Optical Circuit Switching Transceivers
+   作者: Peking University
+   内容: 基于光交换收发器的大模型训练高带宽域架构，
+   成本仅为 NVL-72 的 31%，GPU 利用率提升 3.37x
+   关键词: LLM训练, 光交换, 高带宽域, 张量并行
+
+3. MixNet: 运行时可重构光电混合网络，支持分布式 MoE 训练
+   作者: Peking University
+   内容: 可重构光电混合网络以支持 MoE 的动态通信模式
+   关键词: MoE, 分布式训练, 光电混合网络
+
+4. BiAn: 基于大模型实现生产网络故障定位
+   作者: Peking University
+   内容: 利用 LLM 实现网络故障的自动定位与诊断
+   关键词: LLM, 网络运维, AIOps
+
+5. Mazu: 借助可编程交换机实现加密流量异常检测
+   作者: Peking University
+   内容: 利用可编程交换机的 ML 能力进行加密流量安全检测
+   关键词: 可编程交换机, 异常检测, 网络安全
+
+【Tutorials】
+- Full-day Tutorial: "Networking for Stateful LLM Inference" (LMCache)
+  涵盖 KV Cache 压缩、分离式 Prefill、多模态模型等
+
+【Posters - ML/DL 相关】
+- Continual Benchmarking of LLM-Based Systems on Networking Operations
+- Scaling Graph Neural Networks (GNN) for Real-Time Modeling of Network Behaviour
+- Federated Inference: Towards Collaborative and Privacy-Preserving 
+  Inference over Edge Devices
+- Exploring Reinforcement Learning for Adaptive Key Refresh in IoT Networks
+
+【HotNets 2022 (与SIGCOMM密切相关)】
+- Efficient Flow Scheduling in Distributed Deep Learning Training 
+  with Echelon Formation
+- A new hope for network model generalization (ML模型泛化)
+
+
+================================================================================
+四、主题趋势总结 —— 最近火的方向
+================================================================================
+
+基于对 SIGCOMM 2023-2025 论文题目的分析，以下是当前网络+AI 交叉领域最火的方向：
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔥 方向 1: LLM 训练的网络基础设施 (最热!)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- GPU 集群通信调度优化 (Crux, TE-CCL)
+- 高带宽域架构 (InfiniteHBD)
+- RDMA/RoCE 网络设计 (Meta)
+- 光交换/光电混合网络 (Lightwave Fabrics, MixNet)
+- 张量并行与流水线并行的通信优化
+趋势: 网络成为 LLM 训练的瓶颈，专门的 AI 网络架构需求爆发
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔥 方向 2: LLM 推理优化与 Serving
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- KV Cache 压缩与传输 (CacheGen, LMCache)
+- 分离式 Prefill/Decode 架构
+- 多模型推理调度 (AdaInf)
+- 边缘推理服务
+趋势: LLM 推理成本高、延迟大，网络层优化至关重要
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔥 方向 3: 智能数据平面 (Intelligent DataPlane)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- 在可编程交换机上运行 DL 推理 (Pegasus, Mazu)
+- SmartNIC 加速推理 (Lightning)
+- 网内计算 (In-network Computing)
+趋势: 将 ML 模型下沉到网络设备，实现线速智能处理
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔥 方向 4: ML for Networks (ML 优化网络)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- ML 优化拥塞控制 (Computers Can Learn...)
+- 基于学习的 CDN 缓存 (Darwin)
+- LLM 辅助网络运维/故障定位 (BiAn)
+- GNN 用于网络建模
+趋势: ML/LLM 替代或增强传统网络算法，AIOps 兴起
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔥 方向 5: 分布式 MoE (Mixture-of-Experts) 训练
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Janus: 稀疏 MoE 统一训练框架
+- MixNet: 支持 MoE 动态通信的光电混合网络
+趋势: MoE 带来全新的通信模式(all-to-all)，需要专门网络设计
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔥 方向 6: 联邦学习和隐私保护推理
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Federated Inference (Poster 2025)
+- 加密流量异常检测 (Mazu)
+趋势: 隐私计算 + 网络安全的交叉需求增长
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+总体判断:
+1. SIGCOMM 正从"纯网络会议"转向"AI 基础设施会议"，2024-2025 尤其明显
+2. LLM 相关论文(训练/推理)在近两年呈爆发式增长
+3. 大厂(Google, Meta, 阿里, 微软, 字节)全面参与 AI 网络基建
+4. 高校中北大(PKU)和清华在 2025 年表现突出
+5. CNN/RNN/LSTM 等传统模型较少出现，Transformer/LLM/MoE 是主角
+6. RWKV 未在 SIGCOMM 论文中出现(可能因为 SIGCOMM 是网络会议不是 ML 会议)
+   但 "状态空间模型"和"线性注意力"方向值得关注
+
+================================================================================

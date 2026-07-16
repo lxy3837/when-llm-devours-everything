@@ -1,0 +1,353 @@
+% !TEX program = xelatex
+\documentclass[12pt,a4paper]{ctexart}
+
+% ===== 页面与字体 =====
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setCJKmainfont{SimSun}[AutoFakeBold]
+
+% ===== 标题格式 =====
+\usepackage{titlesec}
+\titleformat{\section}{\LARGE\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}
+
+% ===== 图与表格 =====
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{makecell}
+\usepackage{graphicx}
+
+% ===== 其他 =====
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% ===== 自定义盒子 =====
+\newtcolorbox{thinkbox}[1][]{
+    colback=gray!5,
+    colframe=gray!60,
+    fonttitle=\bfseries,
+    title={思考},
+    breakable,
+    #1
+}
+
+\newtcolorbox{quotebox}{
+    colback=blue!3,
+    colframe=blue!40,
+    fontupper=\large,
+    breakable,
+    arc=0pt,
+    left=15pt,
+    right=15pt,
+}
+
+% ===== 元数据 =====
+\title{
+    {\Huge\bfseries 当 LLM 吞噬一切}\\[8pt]
+    {\Large 2023--2026 年 AI 研究全景观察与反思}\\[12pt]
+    {\normalsize ——基于 9 大顶会/期刊论文的跨领域趋势分析}
+}
+\author{}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+\rule{0.6\textwidth}{0.5pt}\\[6pt]
+{\small
+数据来源：ICML / IEEE S\&P / USENIX (Security, OSDI, ATC, NSDI) /
+SIGCOMM / INFOCOM / NDSS / TDSC / ACM DL \\
+覆盖时间：2023--2026 年  \quad  论文总量：500+ 篇
+}
+\end{center}
+
+\vspace{10pt}
+
+% ===================================================================
+\section{引言：一条分水岭}
+% ===================================================================
+
+2023年是一个分水岭。这一年之前，不同领域的顶级会议还各自为战：安全会议讨论后门攻击和差分隐私，系统会议关注分布式训练和GPU调度，网络会议研究拥塞控制和数据平面优化。它们之间当然有交集，但交集很小。
+
+ChatGPT的出现改变了一切。
+
+当我把9个顶级会议/期刊的论文摊开，试图找出2023--2026年间的研究趋势时，一个无法回避的事实浮现出来：\textbf{大语言模型（LLM）正在吞噬计算机科学的每一个子领域}。这不是比喻，而是对500多篇论文题目和摘要逐一审视后的统计事实。
+
+\begin{quotebox}
+LLM 不是 AI 的一个子方向。\\
+LLM 是 AI 的一个时代。
+\end{quotebox}
+
+本文尝试回答几个问题：LLM 为什么能吞噬一切？在它吞噬的过程中，哪些方向被消灭了，哪些被重塑了，哪些反而获得了新生？不同领域之间的「温差」有多大？以及——这对研究者意味着什么？
+
+% ===================================================================
+\section{LLM：吞噬一切的逻辑}
+% ===================================================================
+
+\subsection{不是「又多了一个topic」，而是「所有topic都被重写」}
+
+在IEEE S\&P这个安全领域的旗舰会议上，2023年还没有一篇专门针对LLM的论文。但到了2025年，LLM Security已经成为一个\textbf{独立的完整session}——从越狱攻击（MASTERKEY、SneakyPrompt）、提示注入（Fun-tuning）、到LLM应用商店安全（GPTracker），覆盖了整个攻击面。
+
+在SIGCOMM这个网络领域的顶会上，2024--2025年间LLM训练和推理的基础设施论文爆发式增长：GPU通信调度（Crux）、KV Cache网络传输（CacheGen）、光交换网络支撑LLM训练（InfiniteHBD）、LLM辅助网络运维（BiAn）。网络不再只是「传输数据包」，而是「传输智能」。
+
+在NSDI 2026上，LLM相关论文占据了\textbf{大幅版面}：训练、推理、调度、KV Cache管理、Agent服务化，甚至连session名称都变成了「All Your Networks Are Belong to ML」这样的宣言。
+
+\begin{thinkbox}
+LLM之所以能「吞噬一切」，不是因为学术界跟风，而是因为它确实改变了每个领域的核心约束。安全的攻击面变了（从DNN到LLM），网络的瓶颈变了（从带宽到GPU通信），系统的优化目标变了（从吞吐量到TTFT/TPOT）。\textbf{问题是真问题，不是蹭热点。}
+\end{thinkbox}
+
+% ===================================================================
+\section{架构之争：当 Transformer 不再是唯一的答案}
+% ===================================================================
+
+如果说2023年的共识是「Transformer is all you need」，那么2026年的图景要复杂得多。三个挑战者正在从不同方向撼动Transformer的统治。
+
+\subsection{扩散语言模型：年度最大黑马}
+
+ICML 2026的\textbf{两项杰出论文奖全部颁给了扩散模型研究}——这是近年来首次单个范式包揽最高奖项。清华和阿里合作的《The Flexibility Trap》证明了一个反直觉的结论：扩散语言模型「任意顺序生成」的灵活性，在推理任务上反而是个陷阱——模型会绕过高不确定性的关键token，导致解空间坍缩。MIT的《High-Accuracy Sampling》则从理论上证明扩散模型可以以指数级优势超越自回归模型。
+
+\begin{thinkbox}
+扩散模型从图像生成杀入语言建模，这件事本身就值得玩味。它提醒我们：\textbf{「主流」不等于「最优」，技术路线的垄断往往只是阶段性均衡}。就像十年前CNN统治视觉、RNN统治序列，谁也想不到一个来自机器翻译的注意力机制会颠覆一切。
+\end{thinkbox}
+
+\subsection{Mamba/RWKV：RNN 的复仇}
+
+在2023--2025年间，CNN和RNN/LSTM在几乎所有顶会上消失——不是「减少」，是「消失」。NDSS、IEEE S\&P、USENIX、SIGCOMM、NSDI的论文题目中，LSTM和RNN的出现次数趋近于零。NSDI 2026的关键词统计中，CNN/RNN/LSTM/RWKV的统一计数是\textbf{0}。
+
+但这不意味着序列建模不需要高效架构。SSM/Mamba/RWKV正在走一条完全不同的路：Mamba-3入选ICLR 2026 Oral；RWKV迭代到第7代；ACM Digital Library显示，Hybrid Mamba-Transformer已经成为新范式。更重要的是，这些架构的O(L)推理复杂度天然适合边缘部署——而边缘部署正是LLM的下一个战场。
+
+\begin{thinkbox}
+RWKV至今未出现在INFOCOM、SIGCOMM、NDSS等会议上。这是「温差」，也是机会。当一个架构在ML社区已经获得认可（ICLR Oral），但尚未渗透到网络/安全社区时，往往意味着蓝海。当然，前提是这个架构确实能解决那个领域的真问题，而不是强行嫁接。
+\end{thinkbox}
+
+\subsection{CNN和LSTM：不是死了，是退出了舞台中央}
+
+CNN仍然是计算机视觉底层特征提取的不可替代的工具，但「CNN+」混合架构才是它的生存方式。LSTM在时序预测等垂直场景仍有应用，但不再是论文标题关键词。这不是说它们没用——而是说，\textbf{它们不再是论文的「卖点」}。在顶会上，你很难靠「我们用CNN/LSTM解决了X问题」来打动审稿人了。
+
+% ===================================================================
+\section{安全：当 AI 自己成为攻击面}
+% ===================================================================
+
+\subsection{三重迁移：从模型到生态、从数字到物理、从经验到理论}
+
+安全领域的变化速度和深度，可能是所有子领域中最剧烈的。
+
+\textbf{第一重：攻击面从「模型」扩张到「生态」。} 2023年的AI安全还集中在DNN的对抗鲁棒性和后门攻击上。到了2024--2025年，攻击面已经扩展到LLM应用商店（GPTracker）、训练数据供应链投毒（Poisoning Web-Scale Training Datasets is Practical）、提示版权窃取（Prompt Stealing）、语音克隆检测——安全研究正在从「模型安全」走向「生态安全」。
+
+\textbf{第二重：攻击从数字域走向物理域。} NDSS 2025出现了AlphaDog（利用Alpha通道的物理世界伪装攻击）、DorPatch（分布式遮挡鲁棒对抗补丁）。安全研究的「真实感」在增强——不再只攻击ImageNet分类器，而是攻击自动驾驶、摄像头、助听器。
+
+\textbf{第三重：从经验走向理论。} ICML 2026上，Northwestern的CRAFT论文发现：即使推理模型给出安全的最终输出，中间推理过程仍可能泄露不安全内容——这被称为「表面安全对齐」（Surface Safety Alignment, SSA）。这不再是一个经验性的「加更多安全数据」的问题，而是一个需要理论解释的深层现象。
+
+\begin{thinkbox}
+这三重迁移指向同一个方向：AI安全正在从「工程问题」变成「科学问题」。一个成熟的学科，不能只靠「我们又发现了一种攻击」来推动，而是需要理论框架来解释「为什么会有攻击、攻击的本质是什么」。2026年，我们正在这个转折点上。
+\end{thinkbox}
+
+\subsection{后门攻击的靶子迁移：Vision Transformer 成了新猎物}
+
+TDSC 2025--2026年的数据显示，后门攻击的目标正在从传统CNN/DNN快速迁移到Vision Transformer。Megatron、三重隐蔽后门（空间+频域+特征域）、多触发器攻击——这些比传统后门攻击精细得多。ViT的注意力机制给攻击者提供了新的「后门通道」，也带来了更隐蔽的攻击手段。
+
+这提出了一个深层问题：\textbf{新架构引入新能力的同时，是否也引入了新的脆弱性？} Transformer替代CNN不是因为「更安全」，而是因为「更强」。但如果「更强」意味着攻击面更大，我们如何权衡？
+
+\subsection{LLM安全：从零到专场的爆发}
+
+在2023--2025的IEEE S\&P上，LLM安全论文从0篇增长到一个完整session。在NDSS上也呈现类似曲线。这是一个典型的「研究方向生命周期」的压缩版——通常一个方向从出现到顶级会议有专门track需要5--10年，LLM安全用了不到2年。
+
+原因很简单：\textbf{ChatGPT让全世界人（包括审稿人）都在实际使用LLM，安全的切肤之痛不再是抽象的。}
+
+% ===================================================================
+\section{联邦学习：成熟期的阵痛}
+% ===================================================================
+
+联邦学习是TDSC和NDSS上论文最多的方向，在INFOCOM 2025也有23篇之多。但值得注意的是两个信号：
+
+\textbf{信号一：从攻击转向实用防御。} 2023年的FL安全论文还在问「能攻击吗」（投毒、梯度泄露、后门），2025--2026年已经在问「如何实用化防御」（拜占庭容错聚合、可验证低通信FL、模型水印保护）。
+
+\textbf{信号二：融合成为新方向。} 联邦学习不再孤立发展，而是与LLM（联邦LLM微调+FedLoRA）、强化学习（FedHPD）、视觉语言模型深度融合。ICML 2026上，FedDTL提出了解耦编码器训练+RL泛化微调的新范式。
+
+\textbf{信号三：在不同社区的温度差。} FL在USENIX系列会议上几乎看不到，在NSDI 2026的论文列表中也缺席。这说明FL已经从「系统创新」转向「安全隐私」赛道——一个方向成熟之后，它在不同社区的「可见度」会分化。
+
+\begin{thinkbox}
+联邦学习的论文还很多，但「增量创新」的论文也越来越多。当一个方向的论文标题中反复出现「Robust」「Privacy-Preserving」「Efficient」这些修饰词，但是否真的解决了核心矛盾——隐私和效用的根本权衡——仍然有待回答。这可能是这个方向最大的长期挑战。
+\end{thinkbox}
+
+% ===================================================================
+\section{系统与网络：被 LLM 重塑的基础设施}
+% ===================================================================
+
+\subsection{从「传输比特」到「传输智能」}
+
+SIGCOMM 2024的主题演讲可以概括为一句：网络不再是比特的管道，而是智能的血管。NSDI 2026甚至把session命名为「All Your Networks Are Belong to ML」。
+
+具体的重塑体现在三个层面：
+
+\textbf{训练层：GPU通信成为核心瓶颈。} Crux（阿里云）通过GPU强度感知的通信调度减少争用；TE-CCL（UPenn+微软+OpenAI）将ML集体通信建模为多商品流问题；Meta分享了RoCE在大规模AI训练中的工业实践经验。当模型从千卡级扩展到万卡级，通信的开销从「重要」变成了「致命」。
+
+\textbf{推理层：KV Cache驱动的全新系统设计。} CacheGen（SIGCOMM 2024）将KV Cache压缩3.5--4.3倍并通过网络流式传输；Sarathi-Serve（OSDI 2024）用chunked-prefill打破吞吐-延迟权衡；DroidSpeak（NSDI 2026）实现跨微调模型变体的KV Cache共享。KV Cache不再是一个「缓存优化问题」，而是\textbf{LLM推理系统设计的核心抽象}。
+
+\textbf{边缘层：LLM从云走向端。} INFOCOM 2025--2026有超过15篇论文涉及LLM边缘推理和量化调度。NSDI 2026的HydraServe（北大+阿里云）专门解决Serverless LLM的冷启动问题。MoVi（INFOCOM 2026）在移动设备上实现了实时多模态大模型交互式视频分析。这不是「可以把LLM放到边缘」，而是「LLM必须到边缘才有商业模式」。
+
+\begin{thinkbox}
+一个有趣的观察：SIGCOMM和NSDI上关于LLM基础设施的论文，大部分来自中国高校和企业——清华、北大、南大、上海AI Lab、阿里云、华为、腾讯、蚂蚁。这暗示中国在AI基础设施层面的研究正在形成集群优势。相比之下，USENIX系列会议上美国高校（Stanford、MIT、UC Berkeley、CMU）的论文更多聚焦在模型架构和安全层面。这是「基础设施」vs「上层建筑」的分工，还是碳基的另一个故事？
+\end{thinkbox}
+
+\subsection{MoE：稀疏化带来的系统革命}
+
+Mixture-of-Experts（MoE）正在从一种「特殊的模型架构」变成「系统设计的核心输入」。SIGCOMM 2025的MixNet专门为MoE的动态通信模式设计了可重构光电混合网络；NSDI 2026的SYMI（Stanford+NVIDIA+OpenAI）提出模型和优化器状态解耦的MoE训练方案；INFOCOM的SP-MoE优化了MoE训练的流水线规划。
+
+MoE之所以特殊，是因为它引入了\textbf{all-to-all通信}——每个token需要被路由到不同的专家，而这种通信模式在传统网络架构中没有对应的优化方案。这是「算法驱动系统创新」的典型案例。
+
+% ===================================================================
+\section{强化学习：从游戏玩家到 LLM 的「后训练引擎」}
+% ===================================================================
+
+2024年之前，强化学习在安全会议和系统会议上只是零星出现。但ICML 2026的数据揭示了一个惊人的事实：\textbf{强化学习以886篇论文成为ICML 2026的第一大方向}。
+
+驱动力只有一个：RL成为LLM后训练的标准范式。DeepSeek-R1使用的GRPO方法引爆了整个RL for LLM领域——从PPO到DPO再到GRPO，现在又衍生出DAPO、GSPO、POPO、GOPO等变体。ACM Digital Library生动地描述了这个进化树。
+
+A3C获得ICML 2026 Test of Time奖绝非偶然——它发表于2016年的异步RL思想，十年后竟成为现代LLM后训练的基础设施。这种「技术回响」提醒我们：\textbf{基础研究的价值往往在十年后才能看清}。
+
+\begin{thinkbox}
+RL从「让Agent学会玩游戏」到「让LLM学会推理」，这个转变的本质是什么？我认为是：RL不再被当作「独立的学习范式」，而是被当作「在已有强先验模型上的微调工具」。LLM提供了强大的世界知识和语言理解能力作为先验，RL只需要在这个基础上做「对齐」和「增强」——问题从「从零学起」变成了「从99分学到100分」，而这恰恰是RL擅长的事。
+\end{thinkbox}
+
+% ===================================================================
+\section{Agent：从「Chat」到「Act」的范式跃迁}
+% ===================================================================
+
+如果说LLM的1.0版本是「聊天」，那么2.0版本无疑是「行动」。
+
+NSDI 2026专门出现了Agent相关的系统论文：Agentix（UC Berkeley+Google DeepMind）将Agent推理建模为通用程序的调度问题；Cortex（NUS+USTC+UofT）设计了Agent的语义感知知识缓存；SMetric（SJTU+阿里）实现了面向Agent LLM Serving的Session级别KV Cache管理。
+
+ICML 2026的Cover Story则揭示了更宏大的图景：AI Safety以114篇论文成为第三大热门方向；扩散语言模型从理论走到实践；多模态Agent（如密歇根大学的Procedure-Aware Agent）从VLM「看图说话」转向「持续感知→精准定位→驱动行动」的完整闭环。
+
+\begin{thinkbox}
+Agent的兴起对系统研究提出了全新的挑战：Chatbot的请求是「一次性的」，Agent的请求是「session级的」——需要维护长期记忆、工具调用状态、多步推理的中间结果。这意味着从KV Cache管理到调度策略到SLO定义，整个推理系统栈都需要重新设计。这也是为什么NSDI 2026的Agent论文标题中频繁出现「Session-Centric」「Semantic-Aware」「Program-Level」这些关键词。
+\end{thinkbox}
+
+% ===================================================================
+\section{跨领域「温差」现象}
+% ===================================================================
+
+将9个会议/期刊并置观察，可以发现一个有趣的现象：\textbf{同一个研究方向在不同社区之间存在显著的「温差」}。
+
+\begin{table}[htbp]
+\centering
+\caption{同一方向在不同顶会的热度差异}
+\label{tab:temperature}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}p{2.8cm}cccc@{}}
+\toprule
+研究方向 & ML/AI会议 & 安全会议 & 系统会议 & 网络会议 \\
+\midrule
+联邦学习安全 & ◆◆◆ & ◆◆◆◆◆ & ◆ & ◆◆◆◆ \\
+LLM推理系统 & ◆◆ & — & ◆◆◆◆◆ & ◆◆◆◆◆ \\
+LLM安全/越狱 & ◆◆◆ & ◆◆◆◆◆ & — & — \\
+扩散模型 & ◆◆◆◆◆ & ◆ & — & ◆◆ \\
+Mamba/SSM & ◆◆◆◆ & — & ◆◆ & — \\
+KV Cache优化 & ◆◆ & — & ◆◆◆◆◆ & ◆◆◆◆ \\
+Agent系统 & ◆◆◆◆ & — & ◆◆◆◆◆ & — \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+这个温差现象至少有两个启示：
+
+\textbf{第一，不要用一个社区的「热度」来判断一个方向的「价值」。} 联邦学习在USENIX几乎看不到，但在TDSC和NDSS上是顶流——这恰恰说明FL已经从「系统创新」沉淀为「安全隐私基础设施」，是一个成熟方向，而非衰退方向。
+
+\textbf{第二，「温差」本身就是机会。} RWKV在ML社区获得了ICLR Oral级别的认可，但在网络/安全社区论文数量为零。如果一个架构声称自己有O(L)推理复杂度、天然适合边缘部署，那么它迟早会与网络和系统社区的研究问题发生交集——谁先做，谁就能定义这个交叉领域的问题框架。
+
+% ===================================================================
+\section{几点不成熟的思考}
+% ===================================================================
+
+\subsection{关于「热度」——警醒}
+
+读完这500多篇论文的标题和摘要，最大的感受不是「AI发展真快」，而是\textbf{「我们是否过度集中了」}。
+
+LLM吞噬了一切。安全会议在讨论LLM越狱，系统会议在讨论LLM推理调度，网络会议在讨论LLM训练的通信优化，ML会议在讨论LLM的后训练RL。这当然说明LLM确实重要。但当一个社区的智力资源如此高度集中时，我们必须问自己：\textit{还有什么重要的问题，因为「不涉及LLM」而被忽视？}
+
+后量子密码学、嵌入式安全、侧信道分析、形式化验证——这些方向在近年的顶会上越来越少出现，但它们解决的问题并没有消失。
+
+\subsection{关于「新旧交替」——警惕幸存者偏差}
+
+读到CNN/RNN/LSTM在所有会议中「消失」，自然会产生「它们过时了」的判断。但需要区分两种消失：
+
+\begin{enumerate}[label=(\arabic*)]
+    \item 因为它们被更优方案替代了（如RNN被Transformer在多数NLP任务上替代）；
+    \item 因为审稿人和作者觉得「不够新」而自我审查。
+\end{enumerate}
+
+第(2)种消失是危险的。回看2016--2017年，当所有人都在追逐GAN和强化学习时，Transformer在NIPS 2017上只是一篇Oral论文，远不是「统治一切」的存在。\textbf{下一个范式转换的种子，可能正在我们现在忽视的方向上生长。}
+
+\subsection{关于「交叉」——真正的创新在哪}
+
+最有价值的观察可能不是「什么方向最火」，而是「什么交叉正在发生」。
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{LLM × 联邦学习}：联邦LLM微调（LoRA+FL）正在将两个原本平行的领域缝合。FedDTL在ICML 2026提出用RL做联邦VLM的泛化增强，说明这不仅是「把LLM放到FL框架里」，而是需要全新的方法。
+    
+    \item \textbf{LLM × 网络基础设施}：GPU通信调度、光交换网络、可编程数据平面上的推理——网络研究正在从「传输层」走向「计算层」。SIGCOMM正在从「网络会议」变成「AI基础设施会议」。
+    
+    \item \textbf{LLM × 智能合约}：TDSC上出现的用LLM检测智能合约漏洞（NAPO-SCVD）是Web3 + AI安全的一个新交叉点。这个方向还处于极早期，但两者都处于快速增长期。
+    
+    \item \textbf{RL × LLM后训练}：这是2026年方法论层面最大的创新增量。\\
+    PPO → DPO → GRPO → GSPO → POPO → GOPO 的进化路线，本质上是将RL从「从零学习」重新定义为「从强先验出发的精细优化」。
+\end{itemize}
+
+\subsection{关于「中国角色」——不容忽视的集群效应}
+
+从论文的机构分布来看，中国高校和企业在AI基础设施研究中的参与度极高。SIGCOMM 2025上北大贡献了多篇LLM网络基础设施论文；NSDI 2026上清华、北大、南大、SJTU的论文密集出现；INFOCOM上联邦学习和LLM边缘推理的论文大量来自中国团队。
+
+这不是偶然。当美国的核心AI研究集中在OpenAI、Anthropic、Google DeepMind等少数几家顶级实验室时，中国的研究生态更加分布式——高校和企业并行推进，在基础设施层面形成了从芯片到网络到系统的完整研究栈。这可能是未来几年最值得关注的「结构性变化」。
+
+% ===================================================================
+\section*{写在最后}
+
+作为一个研究者，同时阅读9个不同社区的最新论文是一种奢侈。它让你跳出自己领域的「回音室」，看到更大的图景。
+
+2023--2026年这三年，AI领域的最大变化不是某一个具体技术突破，而是\textbf{LLM作为一个「通用计算范式」的确立}。它不再是一个模型、一个方向、一个工具——它是一层新的抽象，就像操作系统是硬件的抽象一样，LLM正在成为「智能」的抽象。
+
+而在这个抽象之上，安全、系统、网络、应用、理论——所有计算机科学的传统领域都在被重新定义。这不是某个领域的「AI化」，而是\textbf{整个计算机科学的「LLM-native化」}。
+
+对研究者而言，这个时代既是机会也是诱惑。机会在于，到处都是新问题；诱惑在于，很容易迷失在「热度」中而忘记了什么才是真正的科学问题。
+
+希望这份报告能提供一些冷静的观察。
+
+\vspace{12pt}
+\begin{flushright}
+\small 2026年7月16日
+\end{flushright}
+
+% ===================================================================
+\appendix
+\section{数据来源说明}
+
+本报告基于以下数据源整理分析：
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{ACM Digital Library / ICML 2026}：23,918篇投稿，6,352篇接收，录取率26.6\%。爬取关键词覆盖：深度学习、ML、RL、联邦学习、CNN、RNN、Transformer、LSTM、RWKV。
+    \item \textbf{IEEE S\&P 2023--2025}：安全领域顶级会议。2025年首次出现「LLM Security」专门session。覆盖50+篇AI/ML相关论文。
+    \item \textbf{USENIX系列（Security, OSDI, ATC, NSDI）2023--2026}：系统与安全顶会。覆盖LLM推理系统、AI安全攻击、隐私保护ML等方向。
+    \item \textbf{SIGCOMM 2023--2025}：网络领域顶会。2024年开始出现「Moving bits for AI」等AI专题session。录取率约16\%。
+    \item \textbf{INFOCOM 2025--2026}：网络领域顶会。2025: 272/1458篇(18.7\%), 2026: 329/1740篇(18.9\%)。
+    \item \textbf{NDSS 2023--2025}：网络安全顶会。覆盖联邦学习安全、LLM安全、对抗攻击、深度伪造等方向。
+    \item \textbf{TDSC 2025--2026}：IEEE安全与可靠计算汇刊。覆盖46+篇AI/ML论文，联邦学习和后门攻击为最热门方向。
+    \item \textbf{NSDI 2026}：系统顶会。Spring接受率24.2\% (50/207)，Fall接受率22.1\% (100/452)。
+\end{itemize}
+
+\end{document}

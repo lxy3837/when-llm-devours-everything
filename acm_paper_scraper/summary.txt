@@ -1,0 +1,139 @@
+================================================================================
+ACM Digital Library (ton.acm.org) 2025-2026 论文爬取 & 热点方向分析
+爬取时间：2026-07-16
+数据来源：dl.acm.org 及相关学术来源（WebSearch + WebFetch）
+说明：ACM网站有Cloudflare反爬防护(403)，改用WebSearch搜集论文标题+摘要
+================================================================================
+
+============================= 代表性论文列表 =================================
+
+一、大语言模型（LLM）推理加速与部署优化
+  - "Transformer-Based Resource and Stage-Aware Scheduling for Model-Parallel LLM Inference" (ICDCN 2026)
+  - "Closing the Efficiency Gap: AI Datacenter Co-design Roadmap for Scalable Training of LLMs" (ICS 2026)
+  - "Carbon-Taxed Transformers: A Green Compression Pipeline for Overgrown Language Models" (FSE 2026)
+  - "A Survey on Inference Engines for Large Language Models" (ACM TIST 2026)
+  - "You Only Index Once: Cross-Layer Sparse Attention with Shared Routing" (arXiv 2026)
+  - "RedKnot: Efficient Long-Context LLM Serving with Head-Aware KV Reuse" (arXiv 2026)
+
+二、生成式AI与边缘部署
+  - "Generative AI at the Edge: A Comprehensive Survey of Architectures, Hardware and Applications" (ACM CSUR 2026)
+
+三、多模态大模型与AI Agent
+  - "Classification with Uncertainty-Aware Multimodal Deep Learning: A Survey" (SIGKDD Explorations 2026)
+  - "MAGUS: A Unified Multi-Agent Framework for Universal Multimodal Understanding and Generation" (2025)
+  - "InterleaveThinker: Reinforcing Agentic Interleaved Generation" (arXiv 2026)
+  - "Agents of Diffusion: Enhancing Diffusion Language Models with Multi-Agent RL" (AAMAS 2026)
+  - "MLEvolve: A Self-Evolving Framework for Automated ML Algorithm Discovery" (2026)
+
+四、强化学习与LLM后训练
+  - "Beyond Majority Voting: Towards Fine-grained Reward Signal for Test-Time RL" (ACL 2026)
+  - "Deep Reinforcement Learning for Recommender Systems (Special Issue)" (ACM TORS 2026)
+  - "Long-Term Financial Forecasting and Trading via Multi-Agent RL" (ICAIF 2025)
+  - "Bias-Controlled Primal-Dual Natural Actor-Critic for Multi-Objective RL" (2026)
+  - 从PPO→DPO→GRPO→DAPO/GSPO→POPO→GOPO 的完整技术路线
+
+五、状态空间模型 / Mamba / RWKV（后Transformer架构）
+  - "SST: Multi-Scale Hybrid Mamba-Transformer Experts for Time Series Forecasting" (CIKM 2025)
+  - "eMamba: Efficient Acceleration Framework for Mamba Models in Edge Computing" (ACM TECS 2025)
+  - "MemMamba: Rethinking Memory Patterns in State Space Model" (ICLR 2026 under review)
+  - "Log-Normal State-Space Model" (ICLR 2026 under review)
+  - Mamba-3 入选 ICLR 2026 Oral
+  - "Mamba_Attention + Lightweight Convolutions" 用于遥感图像分类 (CCEAI 2026)
+  - RWKV-7 最新进展，线性注意力机制
+
+六、联邦学习
+  - "Shift Happens: Mixture of Experts based Continual Adaptation in FL" (Middleware 2025)
+  - "Policy-Driven Federated Learning for Heterogeneous Edge Devices" (MobiSys Workshop 2026)
+  - "Federated Learning for AI-Assisted Education" (MIDA 2025)
+  - "An Adaptive Differentially Private Federated Learning Framework" (arXiv 2026)
+  - "UB-SMoE: MoE for Resource-adaptive Federated Fine-tuning of Foundation Models" (ICML 2026)
+
+七、Transformer 变体与应用
+  - "Sparse-scale Transformer with Bidirectional Awareness for Time Series Forecasting" (AAAI 2026)
+  - "ScanFormer: Transformer-based Prediction of Multiple Visual Scanpaths" (ACM TOMM 2026)
+  - "Latent Concept Disentanglement in Transformer-based Language Models" (ICLR 2026)
+  - "A Survey on Spatio-Temporal Prediction: From Transformers to Foundation Models" (ACM CSUR 2026)
+  - "QFlash: Bridging Quantization and Memory Efficiency in Vision Transformer Attention" (IJCAI 2026)
+
+八、CNN / RNN / LSTM 的传统应用
+  - CNN: MobileNet 用于老人跌倒检测 (ICAAI 2025), 遥感分类, 医学图像
+  - CNN: UniConvNet 探索大感受野CNN (ICCV 2025)
+  - RNN/LSTM: 基本已不再是前沿方向，主要被 Transformer/SSM 取代
+  - LSTM: 不再有独立的热点方向，仅在特定时序任务中作为baseline出现
+
+================================================================================
+
+==================== 🔥 2025-2026 最热门研究方向总结 ====================
+
+【🔥🔥🔥🔥🔥 第一梯队：绝对主流】
+
+1. LLM推理加速与高效部署（KV Cache优化、模型压缩、稀疏注意力、推理引擎）
+   这是目前最火、论文最多的方向。核心矛盾是模型越来越大 vs 推理成本越来越高。
+   - KV Cache压缩（RedKnot, CLSA）
+   - 稀疏注意力（Vortex可编程稀疏注意力）
+   - 模型压缩/量化（QFlash, Carbon-Taxed Transformers）
+   - 推理引擎（Inference Engine Survey）
+   - 分布式推理调度（Transformer-based Scheduler）
+
+2. LLM后训练与强化学习（GRPO/RLVR/DAPO/GSPO/POPO/GOPO）
+   DeepSeek-R1引爆了GRPO方法，2026年RL for LLM全面爆发：
+   - GRPO家族持续进化（F-GRPO, DAPO, GSPO, POPO, GOPO）
+   - RLVR（可验证奖励的强化学习）
+   - Test-time RL（SCOPE）
+   - Agentic RL（让Agent通过RL学会使用工具）
+
+3. 多模态大模型 + AI Agent
+   - 从单模态到全模态（文本+图像+音频+视频）
+   - Multi-Agent协作框架成为主流（MAGUS, InterleaveThinker）
+   - Agent从"工具调用"走向"自主决策"
+   - MLEvolve: Agent自动发现ML算法
+
+【🔥🔥🔥🔥 第二梯队：高速增长】
+
+4. 状态空间模型(SSM) / Mamba / RWKV —— "后Transformer时代"
+   - Mamba-3 入选 ICLR 2026 Oral
+   - Hybrid Mamba-Transformer（SST）成为新范式
+   - 长序列建模（MemMamba, LNSSM）
+   - 边缘端Mamba加速（eMamba）
+   - RWKV持续迭代到第7代
+
+5. 生成式AI边缘部署（GenAI at the Edge）
+   - Diffusion模型+LLM在边缘设备部署
+   - 硬件-软件协同设计
+
+【🔥🔥🔥 第三梯队：稳步发展】
+
+6. 联邦学习 + 差分隐私
+   - 联邦学习与大模型结合（UB-SMoE for Foundation Models）
+   - 异构设备联邦学习
+   - 差分隐私联邦学习
+
+7. 扩散模型（Diffusion Models）
+   - 扩散语言模型（DLM）作为自回归的替代
+   - 扩散模型 + Multi-Agent RL
+
+8. 绿色AI / 可持续AI
+   - 碳排放约束下的模型压缩
+   - 高效训练/推理
+
+【🔥🔥 第四梯队：成熟应用】
+
+9. Transformer在时间序列/时空预测中的应用
+   - Sparse-scale Transformer
+   - From Transformers to Foundation Models for spatio-temporal prediction
+
+10. CNN —— 在特定领域仍有应用，但已非前沿
+    - CNN主要用于医学图像、遥感、工业检测等垂直场景
+    - UniConvNet等试图让CNN重获竞争力，但整体趋势是ViT/Transformer主导
+
+============================ 关键趋势判断 ============================
+
+1. 2026年的最大主题是「效率」：如何让大模型更快、更省、更小地运行
+2. RL + LLM 是今年方法论层面最大的创新增量
+3. Mamba/SSM 正在从学术奇点走向实际应用，Hybrid架构是过渡方案
+4. AI Agent 从概念验证走向生产落地
+5. CNN/RNN/LSTM 已基本退出核心研究舞台，成为垂直领域的应用工具
+6. 联邦学习与大模型的结合是新的增长点
+7. 多模态不再是"加分项"而是"标配"
+
+===============================================================================

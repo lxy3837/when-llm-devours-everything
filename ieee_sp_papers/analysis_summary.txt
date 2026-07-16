@@ -1,0 +1,174 @@
+# IEEE S&P (2023-2025) AI/ML 安全方向论文汇总与趋势分析
+# 爬取来源: https://www.ieee-security.org/TC/SP-Index.html
+# 日期: 2026-07-16
+
+================================================================================
+一、筛选出的论文（按年份排列）
+================================================================================
+
+## 2025 IEEE S&P
+
+### LLM 安全专场的论文:
+1. "Understanding Users' Security and Privacy Concerns and Attitudes Towards Conversational AI Platforms"
+2. "On the (In)Security of LLM App Stores"
+3. "GPTracker: A Large-Scale Measurement of Misused GPTs"
+4. "Modifier Unlocked: Jailbreaking Text-to-Image Models Through Prompts"
+5. "Fuzz-Testing Meets LLM-Based Agents: An Automated and Efficient Framework for Jailbreaking Text-To-Image Generation Models"
+6. "On the Effectiveness of Prompt Stealing Attacks on In-The-Wild Prompts"
+7. "Fun-tuning: Characterizing the Vulnerability of Proprietary LLMs to Optimization-based Prompt Injection Attacks via the Fine-Tuning Interface"
+8. "HARMONYCLOAK: Making Music Unlearnable for Generative AI"
+9. "Codebreaker: Dynamic Extraction Attacks on Code Language Models"
+10. "Make a Feint to the East While Attacking in the West: Blinding LLM-Based Code Auditors with Flashboom Attacks"
+11. "Benchmarking Attacks on Learning with Errors" (后量子密码学，非ML)
+
+### ML安全/深度学习相关:
+12. "Identifying Incoherent Search Sessions: Search Click Fraud Remediation Under Real-World Constraints" (ML-based fraud detection)
+
+## 2024 IEEE S&P
+
+### DeepFake专场:
+13. "A Representative Study on Human Detection of Artificially Generated Media Across Countries"
+14. "AVA: Inconspicuous Attribute Variation-based Adversarial Attack bypassing DeepFake Detection"
+15. "An Analysis of Recent Advances in Deepfake Image Detection in an Evolving Threat Landscape"
+
+### LLM安全/生成式AI:
+16. "From Chatbots to Phishbots?: Phishing Scam Generation in Commercial Large Language Models"
+17. "Poisoning Web-Scale Training Datasets is Practical"
+18. "You Only Prompt Once: On the Capabilities of Prompt Learning on Large Language Models to Tackle Toxic Content"
+19. "Moderating New Waves of Online Hate with Chain-of-Thought Reasoning in Large Language Models"
+20. "Nightshade: Prompt-Specific Poisoning Attacks on Text-to-Image Generative Models"
+21. "On Large Language Models' Resilience to Coercive Interrogation"
+22. "PromptCARE: Prompt Copyright Protection by Watermark Injection and Verification"
+23. "LLMs Cannot Reliably Identify and Reason About Security Vulnerabilities (Yet?): A Comprehensive Evaluation, Framework, and Benchmarks"
+24. "LLMIF: Augmented Large Language Model for Fuzzing IoT Devices"
+25. "SneakyPrompt: Jailbreaking Text-to-image Generative Models"
+
+### ML模型安全:
+26. "A Picture is Worth 500 Labels: A Case Study of Demographic Disparities in Local Machine Learning Models for Instagram and TikTok"
+27. "SoK: Certified Robustness for Deep Neural Networks" (certified defenses)
+
+### 差分隐私(ML隐私):
+28. "DP-Auditorium: a Large Scale Library for Auditing Differential Privacy"
+29. "Bounded and Unbiased Composite Differential Privacy"
+30. "Cohere: Managing Differential Privacy in Large Scale Systems"
+31. "DPI: Ensuring Strict Differential Privacy for Infinite Data Streaming"
+32. "Budget Recycling Differential Privacy"
+33. "Eureka: A General Framework for Black-box Differential Privacy Estimators"
+34. 等多篇DP论文
+
+### 对抗攻击:
+35. "ObjectSeeker: Certifiably Robust Object Detection against Patch Hiding Attacks via Patch-agnostic Masking"
+
+## 2023 IEEE S&P
+
+### ML安全性专题 (Machine Learning Assurance track):
+36. "SoK: Certified Robustness for Deep Neural Networks"
+37. "RAB: Provable Robustness Against Backdoor Attacks"
+38. "ObjectSeeker: Certifiably Robust Object Detection against Patch Hiding Attacks via Patch-agnostic Masking"
+39. "PublicCheck: Public Integrity Verification for Services of Run-time Deep Models"
+40. "FedRecover: Recovering from Poisoning Attacks in Federated Learning using Historical Information"
+41. "On The Empirical Effectiveness of Unrealistic Adversarial Hardening Against Realistic Adversarial Attacks"
+
+### ML攻击专题 (ML Attacks track):
+42. "ShadowNet: A Secure and Efficient On-device Model Inference System for Convolutional Neural Networks"
+43. "Deepfake Text Detection: Limitations and Opportunities"
+44. "StyleFool: Fooling Video Classification Systems via Style Transfer"
+45. "GeeSolver: A Generic, Efficient, and Effortless Solver with Self-Supervised Learning for Breaking Text Captchas"
+46. "TrojanModel: A Practical Trojan Attack against Automatic Speech Recognition Systems"
+
+### 联邦学习 (Federated Learning):
+47. "ADI: Adversarial Dominating Inputs in Vertical Federated Learning Systems"
+48. "3DFed: Adaptive and Extensible Framework for Covert Backdoor Attack in Federated Learning"
+49. "Scalable and Privacy-Preserving Federated Principal Component Analysis"
+50. "Private, Efficient, and Accurate: Protecting Models Trained by Multi-party Learning with Differential Privacy"
+
+### 强化学习:
+51. "WeRLman: To Tackle Whale (Transactions), Go Deep (RL)" (RL用于区块链MEV问题)
+
+================================================================================
+二、热门方向总结
+================================================================================
+
+根据2023-2025三年的IEEE S&P论文题目分析，AI/ML安全领域呈现以下几个最火的方向：
+
+## 🔥 方向1: 大语言模型(LLM)安全 — 近两年最热，爆炸式增长
+
+这是2024-2025年增速最快的方向，2023年几乎还没有专门针对LLM的论文，到2025年已经有了**独立的"LLM Security"专场**。主要子方向包括:
+
+  - **Jailbreak攻击**(越狱攻击): 研究如何绕过LLM的安全对齐，让模型输出有害内容
+    例: "Modifier Unlocked", "SneakyPrompt", "Fuzz-Testing Meets LLM-Based Agents"
+  - **Prompt注入/窃取**: 通过恶意提示词操控LLM行为
+    例: "Fun-tuning", "On the Effectiveness of Prompt Stealing Attacks"
+  - **LLM供应链安全**: LLM应用商店的恶意插件
+    例: "On the (In)Security of LLM App Stores", "GPTracker"
+  - **LLM用于代码审计**: 用LLM辅助漏洞发现
+    例: "Codebreaker", "LLMs Cannot Reliably Identify and Reason About Security Vulnerabilities"
+  - **版权/水印保护**: 保护Prompt和生成内容的版权
+    例: "PromptCARE", "HARMONYCLOAK"
+
+## 🔥 方向2: AI生成内容(AIGC)安全与检测 — DeepFake攻防
+
+  持续火热，从2023年的文本/图像DeepFake检测，发展到2024-2025年对文生图(T2I)模型的全面攻击:
+  - **DeepFake检测与绕过**: "AVA", "Deepfake Text Detection", "An Analysis of Recent Advances"
+  - **生成模型投毒**: "Nightshade"(著名的图片保护工具), "Poisoning Web-Scale Training Datasets"
+  - **人类对AI内容的辨别能力**: "A Representative Study on Human Detection of Artificially Generated Media"
+
+## 🔥 方向3: 联邦学习(FL)安全 — 稳健增长
+
+  联邦学习的安全研究持续受关注，主要集中在:
+  - **投毒攻击防御**: "FedRecover", "3DFed"
+  - **纵向联邦学习**: "ADI: Adversarial Dominating Inputs in Vertical Federated Learning Systems"
+  - **隐私保护联邦学习**: "Scalable and Privacy-Preserving Federated Principal Component Analysis"
+
+## 🔥 方向4: 对抗机器学习(Adversarial ML)
+
+  经典方向，每年都有:
+  - **可认证鲁棒性**: "SoK: Certified Robustness for Deep Neural Networks"
+  - **后门攻击**: "RAB: Provable Robustness Against Backdoor Attacks"
+  - **模型窃取与完整性验证**: "PublicCheck", "Codebreaker"
+  - **CNN特定安全**: "ShadowNet: A Secure and Efficient On-device Model Inference System for Convolutional Neural Networks"
+
+## 🔥 方向5: 差分隐私(DP) — 基础理论持续深入
+
+  2024年有多篇DP论文，方向从理论到系统:
+  - **DP审计**: "DP-Auditorium", "Eureka"
+  - **DP系统设计**: "Cohere"
+  - **流数据DP**: "DPI: Ensuring Strict Differential Privacy for Infinite Data Streaming"
+
+## 🔥 方向6: 强化学习(RL)安全 — 少量但精品
+
+  - "WeRLman: To Tackle Whale (Transactions), Go Deep (RL)" 将RL用于区块链交易策略
+
+## 📊 趋势判断
+
+1. **LLM安全是2024-2025年的绝对主角** — 从2023年0篇到2025年一个完整track，反映了LLM在实际部署中的安全问题被学术界高度关注。
+
+2. **从"模型安全"到"生态安全"** — 2023年主要关注模型本身的对抗鲁棒性，2024-2025年拓展到了LLM应用商店、训练数据投毒、供应链安全等更广泛的安全生态。
+
+3. **AIGC攻防双线并进** — 一边是用AI生成钓鱼/欺诈内容(攻击方)，一边是检测AI生成内容(防守方)，形成了持续的军备竞赛。
+
+4. **联邦学习安全从小众走向主流** — 2023年有4篇FL安全论文，说明FL在实际应用中暴露的安全问题越来越受重视。
+
+5. **CNN/RNN/LSTM/RWKV** — 2023年有少量CNN相关的安全研究(如ShadowNet)，但RNN/LSTM/RWKV在S&P论文题目中出现的很少，说明S&P更关注新兴架构(Transformer/LLM)的安全问题。
+
+6. **RL安全研究仍然稀少** — 强化学习本身的安全问题在S&P上还是小众方向，更多出现在ML会议(NeurIPS/ICML)上。
+
+================================================================================
+三、关键词分布统计
+================================================================================
+
+在2023-2025 S&P论文题目中出现的关键词频率(粗略统计):
+
+- LLM / Large Language Model:         ~15篇 (集中在2024-2025)
+- Deepfake / Generated:                ~8篇
+- Attack / Adversarial:                ~20篇 (攻击是安全会议的永恒主题)
+- Differential Privacy:                ~8篇
+- Federated Learning:                  ~4篇
+- Prompt:                              ~8篇 (2024-2025新关键词)
+- Jailbreak:                           ~4篇 (2024-2025新关键词)
+- CNN / Convolutional:                 ~2篇
+- Reinforcement Learning:              ~1篇
+- Transformer:                         (嵌在LLM论文中)
+- RNN / LSTM / RWKV:                   ~0篇 (S&P论文题目中未见)
+
+================================================================================

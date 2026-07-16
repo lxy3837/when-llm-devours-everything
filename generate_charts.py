@@ -122,20 +122,15 @@ def chart2_temperature_heatmap():
         for j in range(len(venues)):
             val = data[i, j]
             color = 'white' if val >= 3 else '#333'
-            text = '—' if val == 0 else '◆' * val
-            ax.text(j, i, text, ha='center', va='center', fontsize=9, color=color,
-                    fontweight='bold' if val >= 3 else 'normal')
+            ax.text(j, i, str(val), ha='center', va='center', fontsize=13, color=color,
+                    fontweight='bold')
 
     # 颜色条
     cbar = plt.colorbar(im, ax=ax, shrink=0.85, pad=0.02)
-    cbar.set_label('热度等级', fontsize=10)
+    cbar.set_label('热度等级 (0=无, 5=最热)', fontsize=10)
     cbar.set_ticks([0, 1, 2, 3, 4, 5])
 
     ax.set_title('同一研究方向在不同顶会社区的"温差"', fontsize=13, fontweight='bold', pad=15)
-
-    # 标注
-    ax.text(3.7, 6.3, '◆ = 热度等级\n— = 无该方向论文', fontsize=7, color='#999', va='top',
-            bbox=dict(boxstyle='round,pad=0.3', facecolor='#f9f9f9', edgecolor='#ddd', alpha=0.8))
 
     plt.tight_layout()
     path = os.path.join(OUTPUT_DIR, 'chart2_temperature_heatmap.png')
